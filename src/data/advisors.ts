@@ -12,12 +12,13 @@ export const advisors: Advisor[] = [
     role: 'Asesor inmobiliario',
     phoneDisplay: '+51 982 844 664',
     phoneWhatsApp: '51982844664',
-    email: 'jbgaplicaciones@gmail.com',
+    email: 'j.bega.03@gmail.com',
   },
   {
     name: 'Gerson Villegas Colchado',
     role: 'Asesor inmobiliario',
     phoneDisplay: '+51 986 647 287',
     phoneWhatsApp: '51986647287',
+    email: 'gvillegas264@gmail.com',
   },
 ];
