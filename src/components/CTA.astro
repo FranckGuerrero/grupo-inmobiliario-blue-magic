@@ -1,0 +1,35 @@
+---
+import { buildWhatsAppUrl } from '@utils/whatsapp';
+interface Props {
+  title?: string;
+  description?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryMessage?: string;
+}
+const {
+  title = '¿Listo para avanzar con tu decisión inmobiliaria?',
+  description = 'Conversemos sobre tu propiedad, presupuesto o zona de interés. El equipo de Blue Magic te orientará con información clara y próximos pasos concretos.',
+  primaryLabel = 'Agendar asesoría',
+  primaryHref = '/contacto',
+  secondaryLabel = 'Hablar por WhatsApp',
+  secondaryMessage = 'Hola, deseo agendar una asesoría con Grupo Inmobiliario Blue Magic.',
+} = Astro.props;
+---
+<section class="section--compact">
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-band__grid">
+        <div>
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </div>
+        <div class="cta-band__actions">
+          <a class="btn btn-gold" href={primaryHref}>{primaryLabel}</a>
+          <a class="btn btn-whatsapp" href={buildWhatsAppUrl(secondaryMessage)} target="_blank" rel="noopener noreferrer">{secondaryLabel}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

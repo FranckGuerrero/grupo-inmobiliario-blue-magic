@@ -1,0 +1,13 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+---
+<MainLayout title="Página no encontrada" description="La página solicitada no existe." noindex>
+  <section class="page-hero page-hero--full">
+    <div class="container page-hero__inner">
+      <span class="badge">Error 404</span>
+      <h1>Esta página no existe.</h1>
+      <p class="lead">Puede que la ruta haya cambiado o que el enlace esté incompleto.</p>
+      <a class="btn btn-primary page-hero__button" href="/">Volver al inicio</a>
+    </div>
+  </section>
+</MainLayout>

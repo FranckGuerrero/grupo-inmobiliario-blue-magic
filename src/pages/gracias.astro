@@ -1,0 +1,17 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { buildWhatsAppUrl } from '@utils/whatsapp';
+---
+<MainLayout title="Gracias" description="Gracias por enviar tu consulta a Grupo Inmobiliario Blue Magic." noindex>
+  <section class="page-hero page-hero--full">
+    <div class="container page-hero__inner">
+      <span class="badge">Consulta enviada</span>
+      <h1>Gracias por escribirnos.</h1>
+      <p class="lead">Tu mensaje fue recibido. El equipo de Blue Magic podrá revisar la consulta y responderte mediante el canal indicado.</p>
+      <div class="inline-actions">
+        <a class="btn btn-whatsapp" href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer">También escribir por WhatsApp</a>
+        <a class="btn btn-ghost" href="/">Volver al inicio</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

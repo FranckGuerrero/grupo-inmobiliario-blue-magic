@@ -1,0 +1,28 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import { siteConfig } from '@data/site';
+---
+<MainLayout title="Política de privacidad" description="Política de privacidad del sitio web de Grupo Inmobiliario Blue Magic.">
+  <PageHero eyebrow="Privacidad" title="Política de privacidad" description="Información sobre el uso de los datos enviados mediante formularios y WhatsApp." />
+
+  <section class="section">
+    <div class="container legal-container">
+      <article class="card legal-card">
+        <h2>1. Datos que recopilamos</h2>
+        <p>Podemos solicitar nombre, teléfono, correo, distrito de interés, presupuesto, tipo de inmueble y el mensaje relacionado con tu consulta.</p>
+        <h2>2. Finalidad</h2>
+        <p>Los datos se utilizarán para responder solicitudes, orientar al interesado, enviar información inmobiliaria y coordinar llamadas o visitas cuando corresponda.</p>
+        <h2>3. Protección y minimización</h2>
+        <p>Solo solicitamos información necesaria para la atención inicial. No debes enviar contraseñas, datos bancarios ni documentos sensibles mediante los formularios públicos.</p>
+        <h2>4. Formularios y WhatsApp</h2>
+        <p>Los formularios están preparados para Netlify Forms. Los mensajes enviados mediante WhatsApp se rigen también por las condiciones y políticas de esa plataforma.</p>
+        <h2>5. Derechos del titular</h2>
+        <p>Para solicitar actualización, corrección o eliminación de información, escribe a {siteConfig.email} o al WhatsApp {siteConfig.phoneDisplay}.</p>
+        <h2>6. Contacto</h2>
+        <p>{siteConfig.legalName} · {siteConfig.address}.</p>
+        <div class="notice">Este texto es una base para fines académicos y debe revisarse legalmente antes de utilizar el sitio en una operación comercial real.</div>
+      </article>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,134 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import PropertyCard from '@components/PropertyCard.astro';
+import BlogCard from '@components/BlogCard.astro';
+import CTA from '@components/CTA.astro';
+import { featuredProperties } from '@data/properties';
+import { blogPosts } from '@data/blog';
+import { faqs } from '@data/faqs';
+import { siteConfig } from '@data/site';
+---
+<MainLayout
+  title="Grupo Inmobiliario Blue Magic | Propiedades en Lima"
+  description="Compra, vende o alquila propiedades en Lima con Grupo Inmobiliario Blue Magic. Atención por WhatsApp, propiedades seleccionadas y acompañamiento personalizado."
+>
+  <Hero />
+
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Servicios"
+        title="Soluciones inmobiliarias para cada objetivo"
+        description="Unimos asesoría, presentación comercial y seguimiento para que compradores, arrendatarios y propietarios avancen con mayor claridad."
+        center
+      />
+      <div class="grid grid-3">
+        <ServiceCard
+          image={siteConfig.buyImage}
+          alt="Señales de comprar o alquilar una propiedad"
+          title="Compra o alquila"
+          description="Definimos distrito, presupuesto y prioridades para ayudarte a identificar opciones alineadas con tu realidad."
+          href="/compra-o-alquila"
+          cta="Buscar una propiedad"
+        />
+        <ServiceCard
+          image={siteConfig.sellImage}
+          alt="Representación de una propiedad en venta"
+          title="Vende tu propiedad"
+          description="Organizamos la información del inmueble, su presentación, precio referencial y canal de captación."
+          href="/vende-tu-propiedad"
+          cta="Ofrecer mi propiedad"
+        />
+        <ServiceCard
+          image={siteConfig.aboutImage}
+          alt="Acuerdo de asesoría inmobiliaria"
+          title="Asesoría inmobiliaria"
+          description="Acompañamiento comercial durante consultas, visitas, negociación y coordinación documentaria."
+          href="/contacto"
+          cta="Solicitar asesoría"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container split">
+      <div class="image-frame">
+        <img src={siteConfig.aboutImage} alt="Acompañamiento de Grupo Inmobiliario Blue Magic" loading="lazy" decoding="async" width="1600" height="1067" />
+      </div>
+      <div class="content-stack">
+        <span class="eyebrow">Nuestra propuesta</span>
+        <h2>Más que mostrar inmuebles: ayudamos a tomar decisiones.</h2>
+        <p class="lead">Desde San Borja atendemos operaciones en distritos estratégicos de Lima con una metodología basada en escucha, información ordenada y seguimiento.</p>
+        <ul class="check-list">
+          <li>Atención diferenciada para compradores, arrendatarios y propietarios.</li>
+          <li>Mensajes de WhatsApp identificados por código de propiedad.</li>
+          <li>Ubicaciones referenciales para proteger la seguridad del inmueble.</li>
+          <li>Orientación clara antes de coordinar visitas o avanzar en una operación.</li>
+        </ul>
+        <a class="btn btn-primary content-stack__button" href="/nosotros">Conoce Blue Magic</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Propiedades"
+        title="Oportunidades seleccionadas en Lima"
+        description="Explora cuatro propiedades demostrativas con información comercial, estado de disponibilidad y consulta directa por WhatsApp."
+      />
+      <div class="grid grid-2">
+        {featuredProperties.map((property) => <PropertyCard property={property} />)}
+      </div>
+      <div class="section-action">
+        <a class="btn btn-primary" href="/propiedades">Ver todas las propiedades</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeader eyebrow="Proceso" title="Una ruta sencilla para avanzar mejor" description="Cada contacto sigue un proceso claro para reducir dudas y enfocar la atención." center />
+      <div class="grid grid-4">
+        <article class="card step-card"><div class="icon-bubble">1</div><h3>Nos contactas</h3><p class="muted">Indicas si deseas comprar, vender, alquilar o recibir orientación.</p></article>
+        <article class="card step-card"><div class="icon-bubble">2</div><h3>Definimos tu objetivo</h3><p class="muted">Ordenamos zona, presupuesto, características y plazo esperado.</p></article>
+        <article class="card step-card"><div class="icon-bubble">3</div><h3>Evaluamos opciones</h3><p class="muted">Revisamos alternativas y coordinamos visitas con interesados validados.</p></article>
+        <article class="card step-card"><div class="icon-bubble">4</div><h3>Acompañamos el avance</h3><p class="muted">Damos seguimiento comercial y coordinamos los siguientes pasos.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="¿Tienes una propiedad o estás buscando una?"
+    description="Cuéntanos tu objetivo y recibe una orientación inicial de Grupo Inmobiliario Blue Magic."
+    primaryLabel="Dejar mis datos"
+    primaryHref="/contacto"
+  />
+
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeader eyebrow="Guía inmobiliaria" title="Información útil antes de decidir" description="Cuatro contenidos prácticos para comprar, vender o alquilar con mayor claridad." />
+      <div class="grid grid-4">
+        {blogPosts.map((post) => <BlogCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeader eyebrow="Preguntas frecuentes" title="Respuestas antes de contactarnos" center />
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="card faq-item">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>

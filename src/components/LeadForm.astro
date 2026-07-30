@@ -1,0 +1,91 @@
+---
+import type { LeadField } from '../types/forms';
+
+interface Props {
+  formName: string;
+  title: string;
+  description: string;
+  fields: LeadField[];
+  submitLabel: string;
+}
+
+const { formName, title, description, fields, submitLabel } = Astro.props;
+
+const defaultMaxLength = (field: LeadField): number | undefined => {
+  if (field.maxLength) return field.maxLength;
+  if (field.type === 'textarea') return 1200;
+  if (field.type === 'email') return 120;
+  if (field.type === 'tel') return 20;
+  if (field.type === 'number' || field.type === 'select') return undefined;
+  return 100;
+};
+---
+<form
+  class="card form-card"
+  name={formName}
+  method="POST"
+  action="/gracias"
+  accept-charset="UTF-8"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <input type="hidden" name="form-name" value={formName} />
+  <input type="hidden" name="origen" value={Astro.url.pathname} />
+  <p class="honeypot" aria-hidden="true">
+    <label>No llenar este campo: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="section-head form-card__heading">
+    <span class="eyebrow">Formulario</span>
+    <h2>{title}</h2>
+    <p class="lead">{description}</p>
+  </div>
+
+  <div class="form-grid">
+    {fields.map((field) => (
+      <div class:list={["form-field", field.full && "form-field--full"]}>
+        <label for={`${formName}-${field.name}`}>
+          {field.label}{field.required && <span aria-hidden="true"> *</span>}
+        </label>
+        {field.type === 'textarea' ? (
+          <textarea
+            id={`${formName}-${field.name}`}
+            name={field.name}
+            placeholder={field.placeholder}
+            required={field.required}
+            autocomplete={field.autocomplete}
+            maxlength={defaultMaxLength(field)}
+          ></textarea>
+        ) : field.type === 'select' ? (
+          <select id={`${formName}-${field.name}`} name={field.name} required={field.required}>
+            <option value="">Selecciona una opción</option>
+            {field.options?.map((option) => <option value={option}>{option}</option>)}
+          </select>
+        ) : (
+          <input
+            id={`${formName}-${field.name}`}
+            name={field.name}
+            type={field.type ?? 'text'}
+            placeholder={field.placeholder}
+            required={field.required}
+            autocomplete={field.autocomplete}
+            inputmode={field.inputMode}
+            maxlength={defaultMaxLength(field)}
+          />
+        )}
+      </div>
+    ))}
+
+    <div class="form-field form-field--full consent-field">
+      <label class="consent-label">
+        <input type="checkbox" name="acepta_privacidad" value="si" required />
+        <span>Acepto que mis datos sean utilizados para responder esta consulta, según la <a href="/privacidad">política de privacidad</a>.</span>
+      </label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary form-submit" type="submit">{submitLabel}</button>
+  <p class="form-note">
+    No compartas contraseñas, datos bancarios ni documentación sensible mediante este formulario.
+  </p>
+</form>

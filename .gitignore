@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Archivos generados por Astro
+dist/
+.astro/
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+
+# Configuración local de Netlify
+.netlify/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

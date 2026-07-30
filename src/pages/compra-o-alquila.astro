@@ -1,0 +1,64 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import LeadForm from '@components/LeadForm.astro';
+import PropertyCard from '@components/PropertyCard.astro';
+import CTA from '@components/CTA.astro';
+import { properties } from '@data/properties';
+import { siteConfig } from '@data/site';
+import type { LeadField } from '../types/forms';
+
+const buyerFields = [
+  { name: 'nombre', label: 'Nombre completo', required: true, placeholder: 'Ej. María Torres', autocomplete: 'name' },
+  { name: 'telefono', label: 'WhatsApp', type: 'tel', required: true, placeholder: '+51 999 999 999', autocomplete: 'tel', inputMode: 'tel' },
+  { name: 'email', label: 'Correo', type: 'email', placeholder: 'correo@ejemplo.com', autocomplete: 'email', inputMode: 'email' },
+  { name: 'operacion', label: 'Busco', type: 'select', required: true, options: ['Comprar', 'Alquilar', 'Invertir'] },
+  { name: 'distrito', label: 'Distrito de interés', required: true, placeholder: 'Ej. San Borja, Surco o Miraflores', autocomplete: 'address-level2' },
+  { name: 'presupuesto', label: 'Presupuesto aproximado', required: true, placeholder: 'Ej. US$ 180,000 o S/ 4,000 mensuales' },
+  { name: 'tipo_inmueble', label: 'Tipo de inmueble', type: 'select', options: ['Casa', 'Departamento', 'Oficina', 'Local', 'Terreno', 'Aún no lo sé'] },
+  { name: 'dormitorios', label: 'Dormitorios requeridos', type: 'select', options: ['1', '2', '3', '4 o más', 'No aplica'] },
+  { name: 'financiamiento', label: 'Financiamiento', type: 'select', options: ['Tengo crédito aprobado', 'Estoy evaluando crédito', 'Pago al contado', 'No lo sé aún'] },
+  { name: 'mensaje', label: 'Cuéntanos qué estás buscando', type: 'textarea', full: true, placeholder: 'Zona ideal, plazo, necesidades familiares y características indispensables.' },
+] satisfies LeadField[];
+---
+<MainLayout title="Compra o alquila" description="Encuentra propiedades en Lima según tu presupuesto, distrito y estilo de vida con la orientación de Blue Magic.">
+  <PageHero eyebrow="Compra o alquila" title="Encuentra una propiedad alineada con tu estilo de vida." description="Una buena búsqueda empieza por definir presupuesto, ubicación, plazo y características realmente importantes." />
+
+  <section class="section">
+    <div class="container split">
+      <div class="image-frame"><img src={siteConfig.buyImage} alt="Opciones para comprar o alquilar una propiedad" loading="eager" width="707" height="397" /></div>
+      <div class="content-stack">
+        <span class="eyebrow">Búsqueda personalizada</span>
+        <h2>Menos opciones irrelevantes, mejores decisiones.</h2>
+        <p class="lead">Nuestro equipo organiza tus requisitos antes de recomendar visitas, para concentrar el tiempo en propiedades que sí pueden funcionar.</p>
+        <ul class="check-list">
+          <li>Distritos y referencias importantes para tu rutina.</li>
+          <li>Presupuesto total, financiamiento y gastos adicionales.</li>
+          <li>Tipo de inmueble, dormitorios, cochera y prioridades.</li>
+          <li>Plazo esperado para mudarte, invertir o iniciar contrato.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <LeadForm formName="busqueda-propiedad" title="Cuéntanos qué propiedad estás buscando" description="Con esta información podremos orientar tu búsqueda y responder con mayor precisión." fields={buyerFields} submitLabel="Enviar mi búsqueda" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Propiedades</span>
+        <h2>Opciones que podrían interesarte</h2>
+        <p class="lead">Consulta disponibilidad y condiciones directamente con Blue Magic.</p>
+      </div>
+      <div class="grid grid-2">
+        {properties.slice(0, 2).map((property) => <PropertyCard property={property} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</MainLayout>

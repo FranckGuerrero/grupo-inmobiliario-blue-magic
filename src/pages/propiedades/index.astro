@@ -1,0 +1,56 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import PropertyCard from '@components/PropertyCard.astro';
+import CTA from '@components/CTA.astro';
+import { properties } from '@data/properties';
+---
+<MainLayout title="Propiedades en Lima" description="Explora propiedades en venta y alquiler en Lima con Grupo Inmobiliario Blue Magic.">
+  <PageHero eyebrow="Propiedades" title="Explora oportunidades en venta y alquiler." description="Consulta características, estado de disponibilidad y precio referencial. Cada propiedad puede contactarse por WhatsApp usando su código." />
+
+  <section class="section">
+    <div class="container">
+      <div class="property-toolbar" aria-label="Filtrar propiedades">
+        <div class="property-toolbar__group" role="group" aria-label="Tipo de operación">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">Todas</button>
+          <button class="filter-button" type="button" data-filter="venta" aria-pressed="false">Venta</button>
+          <button class="filter-button" type="button" data-filter="alquiler" aria-pressed="false">Alquiler</button>
+        </div>
+        <span class="property-count" data-property-count>{properties.length} propiedades</span>
+      </div>
+
+      <div class="grid grid-2" data-property-grid>
+        {properties.map((property) => <PropertyCard property={property} />)}
+      </div>
+      <p class="card empty-state" data-empty-state hidden>No hay propiedades que coincidan con este filtro.</p>
+      <p class="catalog-note">Las direcciones exactas se comparten únicamente después de validar el interés y coordinar una visita.</p>
+    </div>
+  </section>
+
+  <CTA title="¿No encontraste lo que buscas?" description="Cuéntanos distrito, presupuesto y características. Blue Magic podrá orientar tu búsqueda con mayor precisión." primaryLabel="Enviar búsqueda" primaryHref="/compra-o-alquila" />
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-property-card]'));
+    const count = document.querySelector<HTMLElement>('[data-property-count]');
+    const empty = document.querySelector<HTMLElement>('[data-empty-state]');
+
+    const applyFilter = (filter: string) => {
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = filter === 'all' || card.dataset.operation === filter;
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+      if (count) count.textContent = `${visible} ${visible === 1 ? 'propiedad' : 'propiedades'}`;
+      if (empty) empty.hidden = visible !== 0;
+      buttons.forEach((button) => {
+        const active = button.dataset.filter === filter;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    };
+
+    buttons.forEach((button) => button.addEventListener('click', () => applyFilter(button.dataset.filter ?? 'all')));
+  </script>
+</MainLayout>

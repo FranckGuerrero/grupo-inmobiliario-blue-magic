@@ -1,0 +1,53 @@
+---
+import type { Property } from '@data/properties';
+import { buildWhatsAppUrl, propertyWhatsAppMessage } from '@utils/whatsapp';
+
+interface Props {
+  property: Property;
+}
+const { property } = Astro.props;
+const whatsappUrl = buildWhatsAppUrl(propertyWhatsAppMessage(property.code, property.title, property.district));
+---
+<article
+  class="card property-card"
+  data-property-card
+  data-operation={property.operation.toLowerCase()}
+  data-type={property.type.toLowerCase()}
+  data-district={property.district.toLowerCase()}
+>
+  <a href={`/propiedades/${property.slug}`} aria-label={`Ver detalle de ${property.title}`}>
+    <img
+      class="property-card__image"
+      src={property.thumbnail}
+      alt={property.title}
+      loading="lazy"
+      decoding="async"
+      width="720"
+      height="450"
+    />
+  </a>
+  <div class="property-card__body">
+    <div class="property-card__meta">
+      <span class="pill pill--emerald">{property.operation}</span>
+      <span class="pill">{property.type}</span>
+      <span class:list={["pill", property.status === 'Disponible' ? "pill--gold" : "pill--reserved"]}>{property.status}</span>
+    </div>
+    <div>
+      <p class="property-code">Código {property.code}</p>
+      <h3><a href={`/propiedades/${property.slug}`}>{property.title}</a></h3>
+      <p class="muted">{property.district} · {property.zone}</p>
+    </div>
+    <strong class="property-card__price">{property.price}</strong>
+    <div class="property-card__features">
+      <span>{property.area}</span>
+      <span>{property.bedrooms} dorm.</span>
+      <span>{property.bathrooms} baños</span>
+      <span>{property.parking} coch.</span>
+    </div>
+    <p class="muted">{property.summary}</p>
+    <div class="property-card__actions">
+      <a class="btn btn-primary" href={`/propiedades/${property.slug}`}>Ver detalle</a>
+      <a class="btn btn-whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Consultar</a>
+    </div>
+  </div>
+</article>

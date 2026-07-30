@@ -1,0 +1,52 @@
+---
+import { siteConfig } from '@data/site';
+import { buildWhatsAppUrl } from '@utils/whatsapp';
+---
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <span class="badge">Grupo inmobiliario · Lima</span>
+      <h1>Tu próxima propiedad empieza con una decisión bien acompañada.</h1>
+      <p class="lead">
+        En {siteConfig.legalName} conectamos personas, oportunidades y propiedades con una asesoría clara para comprar, vender o alquilar en Lima.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn-gold" href="/vende-tu-propiedad">Quiero vender mi propiedad</a>
+        <a class="btn btn-primary" href="/compra-o-alquila">Estoy buscando propiedad</a>
+        <a class="btn btn-whatsapp" href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+      </div>
+      <div class="hero__stats" aria-label="Indicadores de Blue Magic">
+        <div class="stat">
+          <strong>12</strong>
+          <span>Distritos de Lima dentro de nuestra cobertura</span>
+        </div>
+        <div class="stat">
+          <strong>+80</strong>
+          <span>Procesos inmobiliarios orientados desde 2022</span>
+        </div>
+        <div class="stat">
+          <strong>24 h</strong>
+          <span>Plazo objetivo para la primera respuesta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__image-wrap">
+        <picture>
+          <source media="(max-width: 640px)" srcset={siteConfig.heroImageMobile} />
+          <img
+            class="hero__image"
+            src={siteConfig.heroImage}
+            width="1254"
+            height="1254"
+            alt="Logotipo de Grupo Inmobiliario Blue Magic"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </picture>
+      </div>
+      
+    </div>
+  </div>
+</section>

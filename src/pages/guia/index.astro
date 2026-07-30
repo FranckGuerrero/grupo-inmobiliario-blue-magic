@@ -1,0 +1,20 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import BlogCard from '@components/BlogCard.astro';
+import CTA from '@components/CTA.astro';
+import { blogPosts } from '@data/blog';
+---
+<MainLayout title="Guía inmobiliaria" description="Consejos prácticos de Blue Magic para comprar, vender o alquilar propiedades con mayor claridad.">
+  <PageHero eyebrow="Guía inmobiliaria" title="Aprende antes de comprar, vender o alquilar." description="Información práctica para ordenar tus preguntas y llegar mejor preparado a una decisión inmobiliaria." />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-4">
+        {blogPosts.map((post) => <BlogCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</MainLayout>

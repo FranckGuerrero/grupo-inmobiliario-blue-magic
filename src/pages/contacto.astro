@@ -1,0 +1,124 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import LeadForm from '@components/LeadForm.astro';
+import { siteConfig } from '@data/site';
+
+import type { LeadField } from '../types/forms';
+import { advisors } from '@data/advisors';
+
+const contactFields = [
+  { name: 'nombre', label: 'Nombre completo', required: true, placeholder: 'Ej. Luis Mendoza', autocomplete: 'name' },
+  { name: 'telefono', label: 'WhatsApp', type: 'tel', required: true, placeholder: '+51 999 999 999', autocomplete: 'tel', inputMode: 'tel' },
+  { name: 'email', label: 'Correo', type: 'email', placeholder: 'correo@ejemplo.com', autocomplete: 'email', inputMode: 'email' },
+  { name: 'motivo', label: 'Motivo de consulta', type: 'select', required: true, options: ['Quiero comprar', 'Quiero vender', 'Quiero alquilar', 'Tengo una propiedad', 'Otra consulta'] },
+  { name: 'distrito', label: 'Distrito de interés', placeholder: 'Ej. San Borja', autocomplete: 'address-level2' },
+  { name: 'mensaje', label: 'Mensaje', type: 'textarea', full: true, required: true, placeholder: 'Cuéntanos brevemente tu necesidad inmobiliaria.' },
+] satisfies LeadField[];
+---
+<MainLayout title="Contacto" description="Contacta a Grupo Inmobiliario Blue Magic por WhatsApp o formulario. Visítanos en Av. San Borja Sur 599, San Borja, Lima.">
+  <PageHero eyebrow="Contacto" title="Hablemos de tu próxima decisión inmobiliaria." description="WhatsApp es nuestro canal principal, pero también puedes dejar tus datos para una respuesta más ordenada." />
+
+  <section class="section">
+    <div class="container detail-grid">
+      <div>
+        <LeadForm formName="contacto-general" title="Envía tu consulta" description="Completa el formulario y el equipo de Blue Magic podrá responderte con una orientación inicial." fields={contactFields} submitLabel="Enviar consulta" />
+      </div>
+      <aside class="detail-sidebar">
+        <div class="card form-card">
+          <div class="advisor-section-heading">
+            <span class="eyebrow">Nuestro equipo</span>
+            <h3>Contacta a un asesor</h3>
+            <p class="muted">
+              Elige al asesor con quien deseas conversar sobre la compra,
+              venta o alquiler de una propiedad.
+            </p>
+          </div>
+
+          <div class="advisor-list">
+            {
+              advisors.map((advisor) => {
+                const message = `Hola, ${advisor.name}. Llegué desde la web de Grupo Inmobiliario Blue Magic y deseo recibir asesoría inmobiliaria.`;
+
+                const whatsappUrl =
+                  `https://wa.me/${advisor.phoneWhatsApp}?text=${encodeURIComponent(message)}`;
+
+                return (
+                  <article class="advisor-card">
+                    <div class="advisor-card__avatar" aria-hidden="true">
+                      {advisor.name
+                        .split(' ')
+                        .slice(0, 2)
+                        .map((word) => word.charAt(0))
+                        .join('')}
+                    </div>
+
+                    <div class="advisor-card__content">
+                      <h4>{advisor.name}</h4>
+                      <p>{advisor.role}</p>
+
+                      <div class="advisor-card__links">
+                        <a href={`tel:+${advisor.phoneWhatsApp}`}>
+                          {advisor.phoneDisplay}
+                        </a>
+
+                        {
+                          advisor.email && (
+                            <a href={`mailto:${advisor.email}`}>
+                              {advisor.email}
+                            </a>
+                          )
+                        }
+                      </div>
+                    </div>
+
+                    <a
+                      class="btn btn-whatsapp advisor-card__button"
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Contactar por WhatsApp a ${advisor.name}`}
+                    >
+                      WhatsApp
+                    </a>
+                  </article>
+                );
+              })
+            }
+          </div>
+
+          <div class="office-contact">
+            <div class="info-row">
+              <span>Dirección</span>
+              <span>{siteConfig.address}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Horario</span>
+              <span>{siteConfig.officeHours}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card map-card">
+          <div class="map-card__heading">
+            <h3>Encuéntranos en San Borja</h3>
+            <p class="muted">{siteConfig.address}</p>
+          </div>
+          <div class="map-frame">
+            <iframe
+              src={siteConfig.mapsEmbedUrl}
+              title="Ubicación de Grupo Inmobiliario Blue Magic en San Borja"
+              width="600"
+              height="450"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              sandbox="allow-scripts allow-same-origin allow-popups"
+            ></iframe>
+          </div>
+          <a class="btn btn-ghost map-card__button" href={siteConfig.mapsDirectionsUrl} target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</MainLayout>

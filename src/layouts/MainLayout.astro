@@ -1,0 +1,127 @@
+---
+import '@styles/global.css';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import WhatsAppFloat from '@components/WhatsAppFloat.astro';
+import { siteConfig } from '@data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = `${siteConfig.legalName} | Propiedades en Lima`,
+  description = siteConfig.description,
+  image = siteConfig.heroImage,
+  canonical = Astro.url.pathname,
+  noindex = false,
+} = Astro.props;
+
+const baseUrl = Astro.site ?? new URL('https://grupo-inmobiliario-blue-magic.netlify.app');
+const pageTitle = title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
+const canonicalUrl = new URL(canonical, baseUrl).toString();
+const imageUrl = new URL(image, baseUrl).toString();
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: siteConfig.legalName,
+  alternateName: siteConfig.name,
+  description: siteConfig.description,
+  url: baseUrl.toString(),
+  logo: new URL(siteConfig.heroImage, baseUrl).toString(),
+  image: imageUrl,
+  telephone: siteConfig.phoneDisplay,
+  email: siteConfig.email,
+  foundingDate: String(siteConfig.foundedYear),
+  areaServed: siteConfig.coverage.map((district) => ({ '@type': 'AdministrativeArea', name: district })),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. San Borja Sur 599',
+    addressLocality: 'San Borja',
+    addressRegion: 'Lima',
+    postalCode: siteConfig.postalCode,
+    addressCountry: 'PE',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '13:00',
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="theme-color" content="#0b2f63" />
+    <meta name="color-scheme" content="light" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteConfig.legalName} />
+    <meta property="og:locale" content="es_PE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
+    <Header />
+    <main id="contenido-principal">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+      const nav = document.querySelector<HTMLElement>('[data-nav]');
+
+      const setMenuState = (open: boolean) => {
+        nav?.classList.toggle('is-open', open);
+        document.body.classList.toggle('menu-open', open);
+        toggle?.setAttribute('aria-expanded', String(open));
+        toggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      };
+
+      toggle?.addEventListener('click', () => {
+        setMenuState(toggle.getAttribute('aria-expanded') !== 'true');
+      });
+
+      nav?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuState(false));
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setMenuState(false);
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1100) setMenuState(false);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+import { navigation, siteConfig } from '@data/site';
+import { buildWhatsAppUrl } from '@utils/whatsapp';
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <h3>{siteConfig.legalName}</h3>
+        <p class="footer__description">{siteConfig.description}</p>
+        <div class="footer__actions">
+          <a class="btn btn-gold" href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a class="btn btn-ghost footer__ghost" href="/contacto">Formulario</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Menú</h4>
+        <div class="footer__links">
+          {navigation.slice(0, 5).map((item) => <a href={item.href}>{item.label}</a>)}
+        </div>
+      </div>
+
+      <div>
+        <h4>Recursos</h4>
+        <div class="footer__links">
+          <a href="/propiedades">Propiedades</a>
+          <a href="/guia">Guía inmobiliaria</a>
+          <a href="/privacidad">Privacidad</a>
+          <a href="/contacto">Contacto</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <div class="footer__links">
+          <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer">{siteConfig.phoneDisplay}</a>
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+          <span>{siteConfig.address}</span>
+          <span>{siteConfig.officeHours}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {new Date().getFullYear()} {siteConfig.legalName}. Todos los derechos reservados.</span>
+      <span>{siteConfig.academicDisclaimer}</span>
+    </div>
+  </div>
+</footer>

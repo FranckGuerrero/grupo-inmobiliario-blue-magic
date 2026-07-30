@@ -1,0 +1,29 @@
+---
+import type { BlogPost } from '@data/blog';
+interface Props {
+  post: BlogPost;
+}
+const { post } = Astro.props;
+---
+<article class="card blog-card">
+  <a href={`/guia/${post.slug}`}>
+    <img
+      class="blog-card__image"
+      src={post.thumbnail}
+      alt={post.title}
+      loading="lazy"
+      decoding="async"
+      width="720"
+      height="450"
+    />
+  </a>
+  <div class="blog-card__body">
+    <div class="blog-card__meta">
+      <span class="pill pill--emerald">{post.category}</span>
+      <span class="pill">{post.readTime}</span>
+    </div>
+    <h3><a href={`/guia/${post.slug}`}>{post.title}</a></h3>
+    <p class="muted">{post.excerpt}</p>
+    <a class="btn btn-ghost" href={`/guia/${post.slug}`}>Leer guía</a>
+  </div>
+</article>

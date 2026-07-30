@@ -1,0 +1,74 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import CTA from '@components/CTA.astro';
+import { siteConfig } from '@data/site';
+---
+<MainLayout
+  title="Nosotros | Grupo Inmobiliario Blue Magic"
+  description="Conoce la historia, cobertura y forma de trabajo de Grupo Inmobiliario Blue Magic en Lima."
+>
+  <PageHero
+    eyebrow="Nosotros"
+    title="Una inmobiliaria creada para hacer más claras las decisiones importantes."
+    description="Blue Magic combina atención cercana, criterio comercial y seguimiento para conectar personas con propiedades que sí responden a sus objetivos."
+  />
+
+  <section class="section">
+    <div class="container split">
+      <div class="content-stack">
+        <span class="badge">Desde {siteConfig.foundedYear} · San Borja</span>
+        <h2>La historia de Blue Magic</h2>
+        <p class="lead">Blue Magic nació en San Borja en 2022, a partir de una idea sencilla: una operación inmobiliaria debe sentirse acompañada, comprensible y segura desde la primera conversación.</p>
+        <p class="muted">Empezamos atendiendo búsquedas residenciales en Lima Moderna y, con el tiempo, ampliamos nuestro trabajo a propietarios que necesitan presentar mejor sus inmuebles y a familias que buscan comprar o alquilar con criterios más claros.</p>
+        <p class="muted">Nuestro equipo integra asesoría comercial, marketing inmobiliario y coordinación con aliados especializados cuando una operación requiere revisión legal, financiera o técnica.</p>
+      </div>
+      <div class="image-frame">
+        <img src={siteConfig.aboutImage} alt="Equipo de Blue Magic generando un acuerdo inmobiliario" loading="eager" width="1600" height="1067" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <div class="grid grid-3 impact-grid">
+        <article class="card impact-card"><strong>+80</strong><h3>Procesos orientados</h3><p class="muted">Consultas, búsquedas, publicaciones y coordinaciones comerciales desarrolladas desde 2022.</p></article>
+        <article class="card impact-card"><strong>12</strong><h3>Distritos de cobertura</h3><p class="muted">Presencia referencial en zonas residenciales y comerciales estratégicas de Lima.</p></article>
+        <article class="card impact-card"><strong>3</strong><h3>Líneas de servicio</h3><p class="muted">Compra, venta y alquiler con una atención diseñada para cada tipo de cliente.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Nuestros valores</span>
+        <h2>La confianza se construye en cada detalle</h2>
+        <p class="lead">Nuestra forma de trabajar busca que cada persona sepa qué está evaluando y cuál es el siguiente paso.</p>
+      </div>
+      <div class="grid grid-4">
+        <article class="card trust-card"><div class="icon-bubble">✓</div><h3>Transparencia</h3><p class="muted">Presentamos la información disponible con claridad y señalamos aquello que debe verificarse.</p></article>
+        <article class="card trust-card"><div class="icon-bubble">→</div><h3>Acompañamiento</h3><p class="muted">Damos seguimiento desde la primera consulta hasta la coordinación de los siguientes pasos.</p></article>
+        <article class="card trust-card"><div class="icon-bubble">◆</div><h3>Seguridad</h3><p class="muted">Protegemos datos sensibles y evitamos exponer direcciones exactas sin validación previa.</p></article>
+        <article class="card trust-card"><div class="icon-bubble">★</div><h3>Atención personalizada</h3><p class="muted">Cada búsqueda o propiedad se trabaja según objetivos, presupuesto y contexto.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container split">
+      <div class="image-frame"><img src={siteConfig.heroImage} alt="Identidad de Grupo Inmobiliario Blue Magic" loading="lazy" width="1254" height="1254" /></div>
+      <div class="content-stack">
+        <span class="eyebrow">Cobertura en Lima</span>
+        <h2>Conocemos el valor de elegir bien la zona.</h2>
+        <p class="lead">Trabajamos principalmente en distritos residenciales de Lima Moderna y Lima Sur, adaptando la búsqueda al estilo de vida y presupuesto de cada cliente.</p>
+        <div class="coverage-list">
+          {siteConfig.coverage.map((district) => <span class="pill">{district}</span>)}
+        </div>
+        <p class="notice">La cobertura puede ampliarse según el tipo de operación y la disponibilidad del equipo.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</MainLayout>

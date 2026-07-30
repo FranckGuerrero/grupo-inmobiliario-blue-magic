@@ -1,0 +1,33 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import CTA from '@components/CTA.astro';
+import { blogPosts } from '@data/blog';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+---
+<MainLayout title={post.title} description={post.excerpt} image={post.image}>
+  <section class="page-hero">
+    <div class="container page-hero__inner">
+      <span class="breadcrumb">Inicio / Guía inmobiliaria / {post.category}</span>
+      <span class="badge">{post.category} · {post.readTime}</span>
+      <h1>{post.title}</h1>
+      <p class="lead">{post.excerpt}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container article-container">
+      <div class="detail-image article-image"><img src={post.image} alt={post.title} width={post.imageWidth} height={post.imageHeight} loading="eager" /></div>
+      <article class="card article-card">
+        {post.content.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="notice">Este contenido es informativo y debe complementarse con revisión documentaria y asesoría especializada cuando el caso lo requiera.</div>
+      </article>
+    </div>
+  </section>
+
+  <CTA title="¿Tienes una duda específica?" description="Escribe a Blue Magic y cuéntanos tu caso para recibir una orientación inicial." />
+</MainLayout>

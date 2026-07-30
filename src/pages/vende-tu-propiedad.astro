@@ -1,0 +1,49 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import LeadForm from '@components/LeadForm.astro';
+import CTA from '@components/CTA.astro';
+import { siteConfig } from '@data/site';
+import type { LeadField } from '../types/forms';
+
+const ownerFields = [
+  { name: 'nombre', label: 'Nombre completo', required: true, placeholder: 'Ej. Carlos Pérez', autocomplete: 'name' },
+  { name: 'telefono', label: 'WhatsApp', type: 'tel', required: true, placeholder: '+51 999 999 999', autocomplete: 'tel', inputMode: 'tel' },
+  { name: 'email', label: 'Correo', type: 'email', placeholder: 'correo@ejemplo.com', autocomplete: 'email', inputMode: 'email' },
+  { name: 'distrito', label: 'Distrito del inmueble', required: true, placeholder: 'Ej. San Borja', autocomplete: 'address-level2' },
+  { name: 'tipo_inmueble', label: 'Tipo de inmueble', type: 'select', required: true, options: ['Departamento', 'Casa', 'Terreno', 'Local comercial', 'Oficina', 'Otro'] },
+  { name: 'operacion', label: 'Deseo', type: 'select', required: true, options: ['Vender', 'Alquilar', 'Aún no lo tengo claro'] },
+  { name: 'area', label: 'Área aproximada', placeholder: 'Ej. 120 m²' },
+  { name: 'precio', label: 'Precio esperado', placeholder: 'Ej. US$ 250,000' },
+  { name: 'documentos', label: 'Estado de documentos', type: 'select', options: ['Documentos en regla', 'Falta revisar', 'No estoy seguro'] },
+  { name: 'mensaje', label: 'Cuéntanos más sobre tu propiedad', type: 'textarea', full: true, placeholder: 'Ubicación referencial, estado del inmueble, urgencia y características principales.' },
+] satisfies LeadField[];
+---
+<MainLayout title="Vende tu propiedad" description="Solicita una evaluación inicial para vender o alquilar tu propiedad con Grupo Inmobiliario Blue Magic.">
+  <PageHero eyebrow="Vende tu propiedad" title="Convierte tu inmueble en una oportunidad mejor presentada." description="Organizamos la información comercial, la propuesta visual y el seguimiento para atraer consultas con mayor intención." />
+
+  <section class="section">
+    <div class="container split">
+      <div class="content-stack">
+        <span class="eyebrow">Para propietarios</span>
+        <h2>Publicar es solo el inicio.</h2>
+        <p class="lead">Una estrategia inmobiliaria combina información correcta, presentación atractiva, precio competitivo y respuestas oportunas.</p>
+        <ul class="check-list">
+          <li>Revisión inicial de distrito, metraje, estado y documentos.</li>
+          <li>Recomendaciones para preparar el inmueble antes de fotografiarlo.</li>
+          <li>Ficha comercial clara y mensajes orientados al comprador ideal.</li>
+          <li>Filtro inicial de interesados y coordinación de visitas.</li>
+        </ul>
+      </div>
+      <div class="image-frame"><img src={siteConfig.sellImage} alt="Representación de una propiedad puesta en venta" loading="eager" width="638" height="480" /></div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <LeadForm formName="propietarios" title="Solicita una evaluación inicial" description="Completa la información básica para que Blue Magic pueda conocer tu propiedad y contactarte." fields={ownerFields} submitLabel="Enviar información de mi propiedad" />
+    </div>
+  </section>
+
+  <CTA title="¿Prefieres escribir directamente?" description="Envíanos por WhatsApp el distrito, tipo de inmueble y si deseas vender o alquilar." secondaryMessage="Hola, deseo vender o alquilar mi propiedad con Grupo Inmobiliario Blue Magic." />
+</MainLayout>

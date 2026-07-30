@@ -1,0 +1,45 @@
+---
+import { navigation, siteConfig } from '@data/site';
+import { buildWhatsAppUrl } from '@utils/whatsapp';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const whatsappUrl = buildWhatsAppUrl(
+  'Hola, llegué desde la web de Grupo Inmobiliario Blue Magic y deseo recibir asesoría inmobiliaria.',
+);
+---
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a class="logo" href="/" aria-label={`Ir al inicio de ${siteConfig.legalName}`}>
+      <span class="logo__mark" aria-hidden="true">BM</span>
+      <span class="logo__text">
+        <span>{siteConfig.name}</span>
+        <span>{siteConfig.role}</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="main-navigation" data-nav aria-label="Menú principal">
+      {navigation.map((item) => {
+        const normalized = item.href.replace(/\/$/, '') || '/';
+        const active = currentPath === normalized || (normalized !== '/' && currentPath.startsWith(normalized));
+        return <a href={item.href} aria-current={active ? 'page' : undefined}>{item.label}</a>;
+      })}
+      <a class="nav__whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn-primary header__contact" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+        Contactar
+      </a>
+      <button
+        class="menu-toggle"
+        type="button"
+        data-menu-toggle
+        aria-label="Abrir menú"
+        aria-controls="main-navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://grupo-inmobiliario-blue-magic.netlify.app/sitemap-index.xml
